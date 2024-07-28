@@ -1,0 +1,35 @@
+services:
+  postgres:
+    container_name: postgres_container
+    ports:
+      - "5432:5432"
+    image: postgres
+    environment:
+      POSTGRES_USER: maverick
+      POSTGRES_PASSWORD: maverick
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - postgres
+    restart: unless-stopped
+  pgAdmin:
+    container_name: pgAdmin_container
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ga041386@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: maverick
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    networks:
+      - postgres
+    restart: unless-stopped
+networks:
+  postgres:
+    driver: bridge
+volumes:
+  postgres:
+  pgadmin:
