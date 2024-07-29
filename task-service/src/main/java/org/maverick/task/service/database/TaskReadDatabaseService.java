@@ -9,4 +9,6 @@ public interface TaskReadDatabaseService {
   List<Task> findAllByUserId(Long userId);
 
   Optional<Task> findByTitleAndUserId(String title, Long userId);
+
+  Task findByIdOrElseThrow(Long id);
 }

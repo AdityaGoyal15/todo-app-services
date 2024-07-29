@@ -52,7 +52,8 @@ public class TaskServiceImpl implements TaskService {
 
   @Override
   public TaskDto update(Long id, UpdateTaskDto requestDto) {
-    Task task = taskWriteDatabaseService.update(id, requestDto);
+    Task task = taskReadDatabaseService.findByIdOrElseThrow(id);
+    task = taskWriteDatabaseService.update(task, requestDto);
     User user = getUser(task.getUserId());
     return new TaskDto(
         task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), user);
@@ -60,7 +61,8 @@ public class TaskServiceImpl implements TaskService {
 
   @Override
   public TaskDto delete(Long id) {
-    Task task = taskWriteDatabaseService.delete(id);
+    Task task = taskReadDatabaseService.findByIdOrElseThrow(id);
+    taskWriteDatabaseService.delete(id);
     User user = getUser(task.getUserId());
     return new TaskDto(
         task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), user);

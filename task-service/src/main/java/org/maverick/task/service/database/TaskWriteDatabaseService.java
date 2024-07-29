@@ -8,7 +8,7 @@ public interface TaskWriteDatabaseService {
 
   Task save(CreateTaskDto createTaskDto, Long userId);
 
-  Task update(Long id, UpdateTaskDto updateTaskDto);
+  Task update(Task task, UpdateTaskDto updateTaskDto);
 
-  Task delete(Long id);
+  void delete(Long id);
 }

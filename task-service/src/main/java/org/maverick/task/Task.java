@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import org.maverick.task.dto.CreateTaskDto;
+import org.maverick.task.dto.UpdateTaskDto;
 
 @Entity
 @Table(
@@ -31,6 +33,19 @@ public class Task {
 
   public Task() {}
 
+  public Task(CreateTaskDto dto, Long userId) {
+    this.title = dto.title();
+    this.description = dto.description();
+    this.status = "To Do";
+    this.userId = userId;
+  }
+
+  public void update(UpdateTaskDto dto) {
+    this.title = dto.title();
+    this.description = dto.description();
+    this.status = dto.status();
+  }
+
   public Long getId() {
     return id;
   }
@@ -39,31 +54,15 @@ public class Task {
     return title;
   }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
   public String getDescription() {
     return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
   }
 
   public String getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
   public Long getUserId() {
     return userId;
-  }
-
-  public void setUserId(Long userId) {
-    this.userId = userId;
   }
 }
