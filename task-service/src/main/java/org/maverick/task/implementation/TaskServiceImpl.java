@@ -35,9 +35,9 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public TaskDto save(CreateTaskDto requestDto, Long userId) {
+  public TaskDto save(CreateTaskDto createTaskDto, Long userId) {
     User user = getUser(userId);
-    String title = requestDto.title();
+    String title = createTaskDto.title();
     Optional<Task> optionalTask = taskReadDatabaseService.findByTitleAndUserId(title, userId);
 
     if (optionalTask.isPresent()) {
@@ -45,15 +45,15 @@ public class TaskServiceImpl implements TaskService {
           "The User with ID [%d] has already created a Task with title [%s]"
               .formatted(userId, title));
     }
-    Task task = taskWriteDatabaseService.save(requestDto, userId);
+    Task task = taskWriteDatabaseService.save(createTaskDto, userId);
     return new TaskDto(
         task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), user);
   }
 
   @Override
-  public TaskDto update(Long id, UpdateTaskDto requestDto) {
+  public TaskDto update(Long id, UpdateTaskDto updateTaskDto) {
     Task task = taskReadDatabaseService.findByIdOrElseThrow(id);
-    task = taskWriteDatabaseService.update(task, requestDto);
+    task = taskWriteDatabaseService.update(task, updateTaskDto);
     User user = getUser(task.getUserId());
     return new TaskDto(
         task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), user);
