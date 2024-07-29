@@ -2,33 +2,36 @@
 
 ## Overview
 
-- ToDo application is a basic version of a task management application.
-- The application is built using microservices architecture.
-- It has two microservices supporting smooth functionality of the application, `user-service` and `task-service`.
-- Both the services use PostgreSQL as their respective database hosted in a docker container.
-- The services can also be packaged as docker images and pushed to a container registry of choice (e.g. Amazon Elastic
-  Container Registry, Google Artifact Registry, Docker Hub).
-- The project also includes an API collection generated via Insomnia to better understand the functionality of the APIs.
-  APIs have been documented in Swagger as well for the folks who just want to execute and test the backend APIs.
+- The ToDo application represents a streamlined version of a task management system, meticulously designed with a
+  `microservices architecture` for optimal efficiency and scalability.
+- At its core, the application comprises two pivotal microservices: `user-service` and `task-service`. Each service
+  seamlessly integrates with `Eureka` for dynamic registration and discovery, ensuring robust and flexible service
+  management.
+- Both microservices utilize `PostgreSQL` databases, each housed within its own `Docker` container to ensure isolation
+  and consistency. Furthermore, these services can be encapsulated into `Docker images` and effortlessly deployed to a
+  variety of container registries, including `Amazon Elastic Container Registry`, `Google Artifact Registry`,
+  or `Docker Hub`.
+- For developers and integrators, the project features a comprehensive API collection generated via `Insomnia`,
+  providing valuable insights into the API functionalities. Additionally, detailed API documentation is available on
+  `Swagger`, offering a user-friendly interface for executing and testing the backend services.
 
 ## Functional Requirements
 
-- Users should be able to register themselves by providing an email id.
-- Users should be able to create, update, and delete tasks.
-- User profiles should have avatars or image URLs.
-- Include validation to ensure that tasks cannot be created without a title and valid status.
-- Tasks should have a title, description, and a status (e.g., "To Do," "In Progress," "Done")
-- Users should also be able to view a list of tasks and filter them by status.
-- Implement task sorting and searching capabilities.
-- Implement task due dates and reminders.
-- Errors should be handled properly, including sending appropriate error messages and status codes.
+- Users can register using their email addresses.
+- Users can create, update, and delete tasks.
+- User profiles can feature avatars or image URLs.
+- Tasks must have a title and a valid status to be created.
+- Each task includes a title, description, and status (e.g., "To Do," "In Progress," "Done").
+- Users can view, filter, sort, and search through their tasks.
+- Tasks support due dates and reminders.
+- Proper error handling is implemented, with clear error messages and status codes.
 
 ## Non-functional Requirements
 
-- User interactions should be smooth and responsive.
-- Ensure that the application is responsive and works well on both desktop and mobile devices.
-- Critical parts of your application, such as API endpoints and data validation, should be supported by tests.
-- Basic security measures should be implemented to protect the application from common vulnerabilities.
+- The application must provide a smooth and responsive user experience.
+- It should be fully responsive, functioning seamlessly on both desktop and mobile devices.
+- Essential components, such as API endpoints and data validation, must be tested thoroughly.
+- Basic security measures should be in place to safeguard against common vulnerabilities.
 
 ## Technologies
 
@@ -39,28 +42,31 @@
 - Unit testing- `Junit and Mockito`
 - Integration testing- `testcontainers`
 - Containerization- `Docker`
+- REST Client- `Open Feign`
+- Service registry- `Spring Cloud Netflix Eureka`
+- Distributed tracing- `Zipkin`
 - Architecture
     - Microservices architecture
 
 ## Setup Instructions
 
 - **Prerequisites**
-    - Have `JDK` & `Docker` installed in the machine.
+    - Ensure that both `JDK` and `Docker` are installed on your machine.
 - **Process**
-    - Checkout the repository from Github and navigate to the root directory in the terminal.
-    - From the terminal, execute `docker compose up` which will start two services, postgres and pgadmin4.
-    - Navigate to pgadmin console in the browser using the address http://localhost:5050 and add a database server.
-        - Choose the name as per your wish and enter the connection properties.
-        - Once the server is set up, create two databases `users` and `tasks`.
-        - Start both the services either by running them as services in IntelliJ or running the main files in each
-          service.
+    - Clone the repository from GitHub and navigate to the root directory in your terminal.
+    - Run `docker compose up` in the terminal to launch the following services: `PostgreSQL`, `pgAdmin4` and `zipkin`.
+    - Access the `pgAdmin` console by visiting http://localhost:5050 in your browser and add a new database server:
+        - Choose a name for the server and enter the connection details.
+        - Once the server is configured, create two databases: `users` and `tasks`.
+    - Start the microservices by either running them from IntelliJ or executing the main files in each `Spring Boot`
+      service.
 
-          ![img.png](pgadmin-add-database-server.png)
+## Illustrative Images
 
-          ![img.png](running-services.png)
-
-## Additional Supporting Images
+![img.png](architecture.png)
 
 ![img.png](pgadmin4.png)
 
-![img.png](architecture.png)
+![img.png](pgadmin-add-database-server.png)
+
+![img.png](running-services.png)
