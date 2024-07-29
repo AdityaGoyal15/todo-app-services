@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres:/data/postgres
     networks:
-      - postgres
+      - app_network
     restart: unless-stopped
   pgAdmin:
     container_name: pgAdmin_container
@@ -25,10 +25,17 @@ services:
     volumes:
       - pgadmin:/var/lib/pgadmin
     networks:
-      - postgres
+      - app_network
     restart: unless-stopped
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin_container
+    ports:
+      - "9411:9411"
+    networks:
+      - app_network
 networks:
-  postgres:
+  app_network:
     driver: bridge
 volumes:
   postgres:
