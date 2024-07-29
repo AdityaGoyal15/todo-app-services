@@ -45,6 +45,7 @@
 - REST Client- `Open Feign`
 - Service registry- `Spring Cloud Netflix Eureka`
 - Distributed tracing- `Zipkin`
+- Configuration management- `Spring Cloud Config`
 - Architecture
     - Microservices architecture
 
@@ -69,6 +70,6 @@
 
 ![img.png](pgadmin-add-database-server.png)
 
-![img.png](running-services.png)
+![img.png](services.png)
 
 ![img.png](zipkin-traces.png)
