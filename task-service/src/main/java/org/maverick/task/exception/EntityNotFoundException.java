@@ -1,4 +1,4 @@
-package org.maverick.todo.exception;
+package org.maverick.task.exception;
 
 public class EntityNotFoundException extends RuntimeException {
 

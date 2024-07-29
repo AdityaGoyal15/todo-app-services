@@ -1,4 +1,4 @@
-package org.maverick.todo;
+package org.maverick.task;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,9 +10,9 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-    name = "todos",
+    name = "tasks",
     uniqueConstraints = {@UniqueConstraint(columnNames = {"title", "userId"})})
-public class ToDo {
+public class Task {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class ToDo {
   @Column(nullable = false)
   private Long userId;
 
-  public ToDo() {}
+  public Task() {}
 
   public Long getId() {
     return id;

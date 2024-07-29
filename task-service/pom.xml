@@ -10,10 +10,10 @@
     </parent>
 
     <groupId>org.maverick</groupId>
-    <artifactId>todo-service</artifactId>
+    <artifactId>task-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>todo-service</name>
-    <description>todo-service</description>
+    <name>task-service</name>
+    <description>task-service</description>
 
     <properties>
         <java.version>17</java.version>

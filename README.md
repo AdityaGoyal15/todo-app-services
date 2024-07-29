@@ -56,9 +56,11 @@
           service.
 
           ![img.png](pgadmin-add-database-server.png)
+
           ![img.png](running-services.png)
 
 ## Additional Supporting Images
 
 ![img.png](pgadmin4.png)
+
 ![img.png](architecture.png)

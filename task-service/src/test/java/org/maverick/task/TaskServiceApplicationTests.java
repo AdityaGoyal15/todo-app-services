@@ -1,10 +1,10 @@
-package org.maverick.todo;
+package org.maverick.task;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TodoServiceApplicationTests {
+class TaskServiceApplicationTests {
 
   @Test
   void contextLoads() {}

@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="task-service" />
         <module name="user-service" />
-        <module name="todo-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,7 +17,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="todo-service" options="-parameters" />
+      <module name="task-service" options="-parameters" />
       <module name="todo-service (1)" options="-parameters" />
       <module name="todo-service (2)" options="" />
       <module name="user-service" options="-parameters" />
