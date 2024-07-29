@@ -1,8 +1,10 @@
 package org.maverick.task;
 
-import java.util.List;
 import org.maverick.task.dto.CreateTaskDto;
+import org.maverick.task.dto.TaskDto;
 import org.maverick.task.dto.UpdateTaskDto;
+import org.maverick.task.dto.UserTasksDto;
+import org.maverick.task.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,23 +28,24 @@ public class TaskController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Task>> findAllByUserId(@RequestParam Long userId) {
+  public ResponseEntity<UserTasksDto> findAllByUserId(@RequestParam Long userId) {
     return ResponseEntity.ok(taskService.findAllByUserId(userId));
   }
 
   @PostMapping
-  public ResponseEntity<Task> save(
+  public ResponseEntity<TaskDto> save(
       @RequestBody CreateTaskDto requestDto, @RequestParam Long userId) {
     return new ResponseEntity<>(taskService.save(requestDto, userId), HttpStatus.CREATED);
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<Task> update(@PathVariable Long id, @RequestBody UpdateTaskDto requestDto) {
+  public ResponseEntity<TaskDto> update(
+      @PathVariable Long id, @RequestBody UpdateTaskDto requestDto) {
     return ResponseEntity.ok(taskService.update(id, requestDto));
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<Task> delete(@PathVariable Long id) {
+  public ResponseEntity<TaskDto> delete(@PathVariable Long id) {
     return ResponseEntity.ok(taskService.delete(id));
   }
 }
