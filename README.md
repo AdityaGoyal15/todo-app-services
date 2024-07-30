@@ -60,16 +60,23 @@
     - Access the `pgAdmin` console by visiting http://localhost:5050 in your browser and add a new database server:
         - Choose a name for the server and enter the connection details.
         - Once the server is configured, create two databases: `users` and `tasks`.
-    - Start the microservices by either running them from IntelliJ or executing the main files in each `Spring Boot`
-      service.
+    - Start the microservices by either running them from `IntelliJ` or executing the main files in each `Spring Boot`
+      service in the following order:
+        - ServiceRegistryApplication
+        - ConfigServerApplication
+        - UserServiceApplication
+        - TaskServiceApplication
+        - ApiGatewayApplication
+    - Access `http://localhost:8761/eureka` to verify if all the required clients/services have been registered in
+      `Eureka Server`.
 
 ## Illustrative Images
 
 ![img.png](architecture.png)
 
-![img.png](pgadmin4.png)
-
 ![img.png](pgadmin-add-database-server.png)
+
+![img.png](pgadmin4.png)
 
 ![img.png](services.png)
 
