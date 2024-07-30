@@ -67,7 +67,7 @@
         - `UserServiceApplication`
         - `TaskServiceApplication`
         - `ApiGatewayApplication`
-    - Access `http://localhost:8761/eureka` to verify if all the required clients/services have been registered in
+    - Access `http://localhost:8083/eureka/main` to verify if all the required clients/services have been registered in
       `Eureka Server`.
 
 ## Illustrative Images
