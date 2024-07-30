@@ -46,6 +46,7 @@
 - Service registry- `Spring Cloud Netflix Eureka`
 - Distributed tracing- `Zipkin`
 - Configuration management- `Spring Cloud Config`
+- API Gateway- `Spring Cloud Gateway`
 - Architecture
     - Microservices architecture
 
