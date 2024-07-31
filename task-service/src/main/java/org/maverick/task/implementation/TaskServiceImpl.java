@@ -2,15 +2,19 @@ package org.maverick.task.implementation;
 
 import static java.util.Collections.emptyList;
 
+import feign.FeignException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.hibernate.exception.ConstraintViolationException;
 import org.maverick.task.Task;
 import org.maverick.task.client.UserClient;
 import org.maverick.task.dto.CreateTaskDto;
 import org.maverick.task.dto.TaskDto;
 import org.maverick.task.dto.UpdateTaskDto;
 import org.maverick.task.dto.UserTasksDto;
+import org.maverick.task.exception.EntityNotFoundException;
 import org.maverick.task.exception.ToDoAppException;
 import org.maverick.task.external.User;
 import org.maverick.task.response.APIResponse;
@@ -22,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TaskServiceImpl implements TaskService {
 
-  private static final String CIRCUIT_OPEN = "CIRCUIT_OPEN";
+  private static final String SERVER_ERROR = "SERVER_ERROR";
   private final TaskReadDatabaseService taskReadDatabaseService;
   private final TaskWriteDatabaseService taskWriteDatabaseService;
   private final UserClient userClient;
@@ -42,13 +46,21 @@ public class TaskServiceImpl implements TaskService {
     User user = userClient.findById(userId);
     List<Task> tasks = taskReadDatabaseService.findAllByUserId(userId);
     UserTasksDto data = new UserTasksDto(tasks, user);
-    return new APIResponse<>(data, emptyList());
+    return new APIResponse<>(data, emptyList(), true);
   }
 
   public APIResponse<UserTasksDto> findByUserIdFallback(Long userId, Exception e) {
-    List<Task> tasks = taskReadDatabaseService.findAllByUserId(userId);
+    boolean success = true;
+    List<Task> tasks = new ArrayList<>();
+
+    if (e instanceof FeignException) {
+      success = false;
+    } else {
+      tasks = taskReadDatabaseService.findAllByUserId(userId);
+    }
     UserTasksDto data = new UserTasksDto(tasks, null);
-    return new APIResponse<>(data, emptyList());
+    ToDoAppException exception = new ToDoAppException(SERVER_ERROR, e.getMessage());
+    return new APIResponse<>(data, List.of(exception), success);
   }
 
   @Override
@@ -66,12 +78,12 @@ public class TaskServiceImpl implements TaskService {
     Task task = taskWriteDatabaseService.save(createTaskDto, userId);
     TaskDto data =
         new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), user);
-    return new APIResponse<>(data, emptyList());
+    return new APIResponse<>(data, emptyList(), true);
   }
 
   public APIResponse<TaskDto> saveFallback(Exception e) {
-    ToDoAppException exception = new ToDoAppException(CIRCUIT_OPEN, e.getMessage());
-    return new APIResponse<>(null, List.of(exception));
+    ToDoAppException exception = new ToDoAppException(SERVER_ERROR, e.getMessage());
+    return new APIResponse<>(null, List.of(exception), false);
   }
 
   @Override
@@ -82,14 +94,20 @@ public class TaskServiceImpl implements TaskService {
     User user = userClient.findById(task.getUserId());
     TaskDto data =
         new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), user);
-    return new APIResponse<>(data, emptyList());
+    return new APIResponse<>(data, emptyList(), true);
   }
 
   public APIResponse<TaskDto> updateFallback(Long id, UpdateTaskDto updateTaskDto, Exception e) {
+    boolean success = true;
     TaskDto data =
         new TaskDto(
             id, updateTaskDto.title(), updateTaskDto.description(), updateTaskDto.status(), null);
-    return new APIResponse<>(data, emptyList());
+
+    if (e instanceof EntityNotFoundException || e instanceof ConstraintViolationException) {
+      success = false;
+    }
+    ToDoAppException exception = new ToDoAppException(SERVER_ERROR, e.getMessage());
+    return new APIResponse<>(data, List.of(exception), success);
   }
 
   @Override
@@ -100,10 +118,22 @@ public class TaskServiceImpl implements TaskService {
     User user = userClient.findById(task.getUserId());
     TaskDto data =
         new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), user);
-    return new APIResponse<>(data, emptyList());
+    return new APIResponse<>(data, emptyList(), true);
   }
 
-  public APIResponse<TaskDto> deleteFallback(Exception e) {
-    return new APIResponse<>(null, emptyList());
+  public APIResponse<TaskDto> deleteFallback(Long id, Exception e) {
+    Task task;
+    TaskDto data = null;
+    boolean success = true;
+    ToDoAppException exception = new ToDoAppException(SERVER_ERROR, e.getMessage());
+
+    if (e instanceof EntityNotFoundException) {
+      success = false;
+    } else {
+      task = taskReadDatabaseService.findByIdOrElseThrow(id);
+      data =
+          new TaskDto(task.getId(), task.getTitle(), task.getDescription(), task.getStatus(), null);
+    }
+    return new APIResponse<>(data, List.of(exception), success);
   }
 }
