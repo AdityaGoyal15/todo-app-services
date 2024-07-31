@@ -31,8 +31,10 @@ public class TaskReadDatabaseServiceImpl implements TaskReadDatabaseService {
   @Override
   public Task findByIdOrElseThrow(Long id) {
     return taskRepository
-            .findById(id)
-            .orElseThrow(
-                    () -> new EntityNotFoundException("Task with ID [%d] not found".formatted(id)));
+        .findById(id)
+        .orElseThrow(
+            () ->
+                new EntityNotFoundException(
+                    "NOT_FOUND", "Task with ID [%d] not found".formatted(id)));
   }
 }

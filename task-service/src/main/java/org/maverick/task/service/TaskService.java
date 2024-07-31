@@ -4,10 +4,11 @@ import org.maverick.task.dto.CreateTaskDto;
 import org.maverick.task.dto.TaskDto;
 import org.maverick.task.dto.UpdateTaskDto;
 import org.maverick.task.dto.UserTasksDto;
+import org.maverick.task.response.APIResponse;
 
 public interface TaskService {
 
-  UserTasksDto findAllByUserId(Long userId);
+  APIResponse<UserTasksDto> findAllByUserId(Long userId);
 
   TaskDto save(CreateTaskDto requestDto, Long userId);
 

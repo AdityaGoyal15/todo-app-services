@@ -4,6 +4,7 @@ import org.maverick.task.dto.CreateTaskDto;
 import org.maverick.task.dto.TaskDto;
 import org.maverick.task.dto.UpdateTaskDto;
 import org.maverick.task.dto.UserTasksDto;
+import org.maverick.task.response.APIResponse;
 import org.maverick.task.service.TaskService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class TaskController {
   }
 
   @GetMapping
-  public ResponseEntity<UserTasksDto> findAllByUserId(@RequestParam Long userId) {
+  public ResponseEntity<APIResponse<UserTasksDto>> findAllByUserId(@RequestParam Long userId) {
     return ResponseEntity.ok(taskService.findAllByUserId(userId));
   }
 
