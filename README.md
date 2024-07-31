@@ -39,14 +39,15 @@
 - Build- `Maven`
 - Framework- `Spring Boot`
 - Database- `PostgreSQL`
-- Unit testing- `Junit and Mockito`
-- Integration testing- `testcontainers`
+- Unit Testing- `Junit and Mockito`
+- Integration Testing- `testcontainers`
 - Containerization- `Docker`
 - REST Client- `Open Feign`
-- Service registry- `Spring Cloud Netflix Eureka`
-- Distributed tracing- `Zipkin`
-- Configuration management- `Spring Cloud Config`
+- Service Registry- `Spring Cloud Netflix Eureka`
+- Distributed Tracing- `Zipkin`
+- Configuration Management- `Spring Cloud Config`
 - API Gateway- `Spring Cloud Gateway`
+- Fault Tolerance and Resilience- `Resilience4J`
 - Architecture
     - Microservices architecture
 
