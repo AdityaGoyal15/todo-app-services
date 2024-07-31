@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
   public APIResponse<UserTasksDto> findByUserIdFallback(Long userId, Exception e) {
     List<Task> tasks = taskReadDatabaseService.findAllByUserId(userId);
     UserTasksDto data = new UserTasksDto(tasks, null);
-    ToDoAppException exception = new ToDoAppException("FAILED_DEPENDENCY", e.getMessage());
+    ToDoAppException exception = new ToDoAppException("CIRCUIT_OPEN", e.getMessage());
     return new APIResponse<>(data, List.of(exception), PARTIAL_CONTENT, PARTIAL_CONTENT.value());
   }
 
