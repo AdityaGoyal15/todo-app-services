@@ -10,9 +10,9 @@ public interface TaskService {
 
   APIResponse<UserTasksDto> findAllByUserId(Long userId);
 
-  TaskDto save(CreateTaskDto requestDto, Long userId);
+  APIResponse<TaskDto> save(CreateTaskDto requestDto, Long userId);
 
-  TaskDto update(Long id, UpdateTaskDto requestDto);
+  APIResponse<TaskDto> update(Long id, UpdateTaskDto requestDto);
 
-  TaskDto delete(Long id);
+  APIResponse<TaskDto> delete(Long id);
 }
